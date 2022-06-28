@@ -25,16 +25,23 @@ class MyTaskBarIcon(TaskBarIcon):
         self.message = ''
         self.frame = frame
         self.SetIcon(wx.Icon(path(TRAY_ICON), wx.BITMAP_TYPE_PNG))
-        self.Bind(wx.EVT_MENU, self.OnTaskBarClose, id=1)
+        self.Bind(wx.EVT_MENU, self.OnOpenWeb, id=1)
+        self.Bind(wx.EVT_MENU, self.OnTaskBarClose, id=2)
 
     def CreatePopupMenu(self):
         menu = wx.Menu()
-        menu.Append(1, 'Exit')
+        menu.Append(1, 'グラフ')
+        menu.AppendSeparator()
+        menu.Append(2, 'Exit')
         return menu
 
     def UpdateMessage(self, message):
         self.message = message
         self.SetIcon(wx.Icon(path(TRAY_ICON), wx.BITMAP_TYPE_PNG), self.message)
+
+    def OnOpenWeb(self, event):
+        import webbrowser
+        webbrowser.open('http://tailtotto.sakura.ne.jp/moe/')
 
     def OnTaskBarClose(self, event):
         self.frame.Close()
